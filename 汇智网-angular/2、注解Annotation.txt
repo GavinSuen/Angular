@@ -1,0 +1,20 @@
+注解/Annotation
+
+ES6规范里没有装饰器。这其实利用了traceur的一个实验特性：注解。给一个类加注解，等于设置这
+个类的annotation属性：
+	//注解写法
+	@annotation（{selector:"ez-app"}）
+	class EzApp{...}
+等同于：
+	class EzApp{...}
+	EzApp.annotation = [new Component({selector:"ez-app"})]; 
+
+显然，注解可以看做编译器（traceur）层面的语法糖，但和python的装饰器不同，注解在编译时仅仅
+被放在annotation里，编译器并不进行解释展开-这个解释的工作是Angular2完成的：
+
+据称，注解的功能就是Angular2团队向traceur团队提出的，这不是traceur的默认选项，因此可以看
+到我们配置systemjs在使用traceur模块时打开注解：
+	System.config({
+	  map:{traceur:"lib/traceur"},
+	  traceurOptions:{annotation:true}
+	});
