@@ -1,0 +1,17 @@
+（event）- 监听事件
+
+在模板中为元素添加监听很简单，使用一对小括号包裹事件名称，并绑定到表达式即可：
+
+@Component（{selector："ez-app"}）
+@View({template:`
+		<h1 (click)="onClick()">Hello</h1>
+	`})
+
+class EzApp{
+	constructor(){
+		this.onClick=function(){...}
+		}
+	}
+
+另一种等效的书写方法是在事件名称前加on-前缀：
+@View（{template：`<h1 on-click="onClick()">Hello</h1>`}）

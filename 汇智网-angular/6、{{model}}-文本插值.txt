@@ -1,0 +1,13 @@
+{{model}}-文本插值
+
+在模板中使用可以{{表达式}}的方式绑定组件模型中的表达式，当表达式改变时，Angular2将自动更新对应的DOM对象：
+
+@Component（{selector："ez-app"}）
+@View({
+	template:"<h1>{{title}}</h1>"
+})
+class EzApp{
+	constructor(){
+		this.title="标题"
+	}
+}
