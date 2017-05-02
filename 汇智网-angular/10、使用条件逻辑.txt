@@ -1,0 +1,30 @@
+使用条件逻辑
+
+有时我们需要模板的一部分内容在满足一定条件时才显示，比如广告内容对付费用户隐藏而对非付费用户
+显示。
+
+@View({
+	
+	template:`
+		<!-- 根据变量trial的值决定是否显示广告图片 -->
+		<template [ng-if]="trial==true">
+			<img src="ad.jpg">
+		</template>
+		<!-- 以下是正文 -->
+		<pre>...
+		
+		`	
+})
+
+Angular2同时提供了两种语法糖，让NgIf写起来更简单，下面的两种书写方法和上面的正式语法是等效的:
+
+	//使用template attribute
+	<img src="ad.jpg" template="ng-if trial==true">
+	//使用前缀
+	<img src="ad.jpg" *ng-if="trial==true">
+看起来，显然*ng-if的书写方法更加有人情味儿，不过无论采用哪种书写方法，都将转换成上面的正式写
+法，再进行编译。
+
+需要指出的是，NgIf是Angular2预置的指令/Directives，所以在使用之前，需要：
+	1、从angular2库中引入NgIf类型定义
+	2、在组件的ViewAnnotation中通过属性directives声明对该指令的引用
