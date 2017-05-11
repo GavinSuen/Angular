@@ -1,0 +1,18 @@
+设置ShadowDom策略
+
+在Angular2中，ShadowDom的三种策略对应于三个类，三个类继承自ShadowDomStrategy：
+
+Angular2的内核引用的是父类ShadowDomStrategy，我们只需要从三个继承类中选择一个与之绑定就可以
+实现不同策略的选择。下面的示例意味着选择NativaShadowDomStrategy：
+	bind(ShadowDomStrategy).toFactory(function(doc){
+		return new NativeShadowDomStrategy(doc.head);
+	},[DOCUMENT_TOKEN])
+
+上面的表达式用来提交给Angular2的注入器/DI，可以理解为：如果注入器需要实例化一个ShadowDomStrategy
+实例，应当以DOCUMENT_TOKEN为参数，调用一个匿名的工厂函数，而这个工厂函数将返回一个NativeShadow-
+DomStrategy类的实例。ES6支持lambda表达式，因此我们可以写的简单一些：
+	bind(ShadowDomStrategy).toFactory(doc => new NativeShadowDomStrategy(doc.head),[DOCUMENT_TOKEN])
+
+补丁包
+在Angular2的alpha.28版本的官方发行包中，没有包含默认的ShadowDom策略之外的另两种策略实现模块，
+因此我们单独打了一个包render.dev.js

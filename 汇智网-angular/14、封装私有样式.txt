@@ -1,0 +1,22 @@
+ShadowDom-封装私有样式
+
+Angular2采用ShadowDom作为组件的渲染基础，这意味着组件被渲染到独立的Shadow Tree上，这很好，可以
+实现DOM对象和样式的良好封装：
+
+但问题是，除了Chorme之外的大多数浏览器目前还不支持ShadowDom，因此，Angular2提供了三种将模板渲
+染到DOM的策略。
+
+全局仿真策略/EmulatedUnscopedShadowDomStrategy
+	采用这个策略时，Angular2将模板直接插入DOM树，并将模板的样式原封不动地插入head头部。这意味着不同
+组件之间的样式可能冲突。
+	这个策略不需要浏览器原生支持ShadowDom，是当前版本的默认策略。
+
+作用域仿真策略/EmulatedScopedShadowDomStrategy
+	采用这个策略时，Angular2将模板直接插入DOM树，对模板的样式重新定义css选择符后插入head
+头部。由于样式进行了重命名，所以不同组件之间的样式不会冲突。
+	这个策略也不需要浏览器原生支持ShadowDom。
+
+原生策略/NativeShadowDomStrategy
+	采用这个策略时，Angular2将在组件的宿主DOM对象上建立一个ShadowDom树，这棵树与主DOM树
+是隔离的，所以，这是实现web组件的理想方案。
+	如果浏览器原生支持ShadowDom，那么应当使用这个策略。

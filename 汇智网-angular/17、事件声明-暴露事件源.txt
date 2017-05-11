@@ -1,0 +1,26 @@
+事件声明 - 暴露事件源
+
+与属性相反，事件从组件的内部流出，用来通知外部世界发生了一些事情：
+
+在Angular2中为组件增加事件接口也非常简单：定义一个事件源/EventEmitter， 然后通过Component注
+解的events接口包括出来：
+
+    //EzCard
+    @Component({
+        events:["change"]
+    })
+    class EzCard{
+        constructor(){
+            this.change = new EventEmitter();
+        }
+    }
+
+上面的代码将组件EzCard的事件源change暴露为同名事件，这意味着在调用者 EzApp组件的模板中，可
+以直接使用小括号语法挂接事件监听函数：
+
+    //EzApp
+    @View({
+        template : "<ez-card (change)="onChange()"></ez-card>"
+    })
+
+每次EzCard触发change事件时，EzApp的onChange()方法都将被调用。
