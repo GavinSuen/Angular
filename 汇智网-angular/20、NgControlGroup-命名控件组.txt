@@ -1,0 +1,29 @@
+NgControlGroup - 命名控件组
+
+NgControlGroup指令的选择符是[ng-control-group]，如果模板中的某个元素具有这个属性，Angular2框
+架将自动创建一个控件组对象，并将这个对象以指定的名称与DOM对象绑定。
+
+控件组可以嵌套，方便我们在语义上区分不同性质的输入：
+
+	<form>
+		<div ng-control-group="basic">
+			<input type="text" ng-control="name">
+		</div>
+		<div ng-control-group="education">
+			<input type="text" ng-control="school">
+		</div>
+	</form>
+
+	f.value
+	{
+		basic:{
+			name: "..."
+		}
+
+		education:{
+			school: "..."
+		}
+	}
+
+和NgControlName指令一样，NgControlGroup指令也必须作为NgForm或NgFormModel的后代使用，因为这
+个指令需要将创建的控件组对象添加到祖先（NgForm或NgFormModel）所创建的控件组中。

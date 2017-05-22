@@ -1,0 +1,22 @@
+注入 - appInjector
+
+在前一节的示例代码中，组件EzAlgo直接在构造函数中实例化了一个EzAlog对象， 这造成了EzApp和EzAlgo的强耦合，我们可以使用Angular2的注入器/Injector进行 解耦：
+
+appinjector
+
+注入器就像婚姻介绍所，男方在婚介所登记心仪的女性特点，约好见面地点，然后， 坐等发货即可。比如上图：
+
+EzApp组件（男方）使用Component注解的appInjector属性向Angular2框架（婚介所）声明 其依赖于EzAlgo（登记心仪的女性特点），并在其构造函数的参数表中使用Inject注解声明 注入点（约好见面地点），然后，剩下的事儿Angular2（婚介所）就办了：
+
+    @Component({
+        selector : "ez-app",
+        //声明依赖
+        appInjector : [EzAlgo]
+    })
+    @View(...)
+    class EzApp{
+        //Angular2框架负责注入对象
+        constructor(@Inject(EzAlgo) algo){
+            //已经获得EzAlgo实例了！
+        }
+    }

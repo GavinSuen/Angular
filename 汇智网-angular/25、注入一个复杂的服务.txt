@@ -1,0 +1,42 @@
+注入一个复杂的服务
+
+EzAlgo相当简单，使用new或者使用Injector来获得一个实例看起来差别不大。那如果我们 的EzApp组件要使用Http服务呢？
+
+http
+
+第一眼看上去，Http服务显然是一个真正有用的服务 - 因为看起来相当的复杂 - Http依赖于XHRBackend和BaseRequestOptions，而XHRBackend又依赖于BrowserXHR。
+
+我们可以有两种方法获得一个Http的实例，以便通过它获得网络访问的功能：
+
+1. 使用new进行实例化
+
+如果我们使用传统的new方式创建Http实例，看起来应该是这样：
+
+    var xhrbe = new XHRBackend(BrowserXHR);
+    var options = new BaseRequestOptions();
+    var http = new Http(xhrbe,options);
+
+这没什么新奇的，就是繁琐一点。
+
+2. 使用注入器/Injector
+
+如果使用注入器，我们需要向Angular2框架声明这些层叠的依赖关系：
+
+    @Component({
+        appInjector : [
+          bind(BrowserXHR).toValue(BrowserXHR),
+          XHRBackend,
+          BaseRequestOptions,
+          Http
+        ]
+    })
+
+bind(BrowserXHR).toValue(BrowserXHR)的意思是，如果需要注入BrowserXHR类型的变量，注入 这个类本身而非其实例。
+
+原理是这样，不过Angular2已经提供了一个定义好的变量httpInjectables，我们直接引用就可以了。
+
+Observable
+
+Observable是一种异步编程模式，与Promise不同，Observable等多的是从数据而非行为的角度 来封装异步代码。
+
+Http服务的get()方法返回一个Observable对象，可以把Observable对象看做一个可订阅的 数据流，你通过subscribe()方法订阅以后，每当数据流中有新的数据，你都会得到通知。

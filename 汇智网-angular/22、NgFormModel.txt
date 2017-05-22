@@ -1,0 +1,23 @@
+NgFormModel - 绑定已有控件组
+
+NgFormModel指令类似于NgControlGroup指令，都是为控件提供容器。但区别在于， NgFormModel指令将已有的控件组绑定到DOM对象上：
+
+    @View({
+        template : `
+            <!--绑定控件组与控件对象-->
+            <div [ng-form-model]="controls">
+                <input type="text" ng-control="name">
+                <input type="text" ng-control="age">
+            </div>`
+    })
+    class EzComp{
+        constructor(){
+            //创建控件组及控件对象
+            this.controls = new ControlGroup({
+                name :new Control("Jason"),
+                age : new Control("45")
+            });
+        }
+    }
+
+NgFormModel指令可以包含NgControlGroup指令，以便将不同性质的输入分组。

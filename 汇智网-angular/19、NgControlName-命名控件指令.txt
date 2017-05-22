@@ -1,0 +1,35 @@
+
+NgControlName - 命名控件指令
+
+如前所述，NgControlName指令必须作为NgForm或NgFormModel的后代使用，因为这个指令需要将创建的
+控件对象添加到祖先（NgForm或NgFormModel）所创建的控件组中。
+
+NgControlName指令的选择符是[ng-control],这意味着你必须在一个HTML元素上定义ng-control属性，
+这个指令才会起作用。
+
+属性：ngControl
+
+NgControlName指令为宿主的DOM对象创建一个控件对象，并将这个对象以ngControl属性指定的名称绑
+定到DOM对象上：
+
+	<form #f="form">
+		<input type="text" ng-control="user">
+		<input type="password" ng-control="pass">
+	</form>
+
+在上面的代码中，将创建两个Control对象，名称分别为user和pass。
+
+属性/方法：ngModel
+
+除了使用控件组获得输入值，NgControlName指令可以通过ngModel实现模型与表单的双向绑定：
+
+	<form>
+		<input type="text" ng-control="user" [(ng-model)="data.user"]>
+		<input type="password" ng-control="pass" [(ng-model)="data.pass"]>
+	</form>
+
+ngModel即是NgControlName指令的属性，也是他的事件，所以下面的两种写法是等价的：
+
+	<input type="text" ng-control="user" [(ng-model)]="data.user">
+    	//等价于
+    	<input type="text" ng-control="user" [ng-model]="data.user" (ng-model)="data.user">
